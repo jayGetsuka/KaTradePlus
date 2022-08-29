@@ -7,8 +7,8 @@ class Customerlog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var username = TextEditingController();
-    var passwd = TextEditingController();
+    TextEditingController username = TextEditingController();
+    TextEditingController passwd = TextEditingController();
     @override
     void dispose() {
       // Clean up the controller when the widget is disposed.
@@ -50,9 +50,12 @@ class Customerlog extends StatelessWidget {
                         style: TextStyle(fontSize: 20, color: Colors.grey),
                         decoration: InputDecoration(
                           filled: true,
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: Colors.grey,
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.grey,
+                            ),
                           ),
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -70,9 +73,12 @@ class Customerlog extends StatelessWidget {
                         style: TextStyle(fontSize: 20, color: Colors.grey),
                         decoration: InputDecoration(
                           filled: true,
-                          prefixIcon: Icon(
-                            Icons.password,
-                            color: Colors.grey,
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            child: Icon(
+                              Icons.password,
+                              color: Colors.grey,
+                            ),
                           ),
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -100,10 +106,8 @@ class Customerlog extends StatelessWidget {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(16.0))),
                         onPressed: () async {
-                          var user = await Text(username.text);
-                          var pwd = await Text(passwd.text);
                           const dbName = 'Katradeplus';
-                          const dbAddress = '127.0.0.1';
+                          const dbAddress = '10.0.2.2';
                           const defaultUri =
                               'mongodb://$dbAddress:27017/$dbName';
 
@@ -122,9 +126,10 @@ class Customerlog extends StatelessWidget {
                           var collectionName = 'customer';
                           await db.dropCollection(collectionName);
                           var collection = db.collection(collectionName);
-
-                          var res = await collection
-                              .find({'username': user, 'pwd': passwd}).toList();
+                          var res = await collection.find({
+                            'username': username.text,
+                            'pwd': passwd.text
+                          }).toList();
                           if (res.isEmpty) {
                             showDialog(
                               context: context,
@@ -132,7 +137,7 @@ class Customerlog extends StatelessWidget {
                                 return AlertDialog(
                                   // Retrieve the text the that user has entered by using the
                                   // TextEditingController.
-                                  content: Text("NOT USERNAME"),
+                                  content: Text("Invalid password or Username"),
                                 );
                               },
                             );

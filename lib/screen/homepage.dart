@@ -7,13 +7,24 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        child: const Text('Go back!'),
+    return Scaffold(
+        body: Padding(
+      padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+      child: Container(
+        child: Column(
+          children: [
+            Text("Welcome to HomePage"),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Go back!'),
+              ),
+            ),
+          ],
+        ),
       ),
-    );
+    ));
   }
 }
