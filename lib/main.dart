@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:katradeplus/screen/home.dart';
+import 'package:katradeplus/screen/index.dart';
 
 void main() {
   runApp(const MyApp());
