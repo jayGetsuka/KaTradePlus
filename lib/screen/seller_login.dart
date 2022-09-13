@@ -4,24 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:katradeplus/screen/homepage.dart';
 import 'package:katradeplus/screen/seller_register.dart';
+import 'package:katradeplus/screen/seller_homepage.dart';
+import 'package:flutter_session/flutter_session.dart';
 
 class SellerLog extends StatelessWidget {
   const SellerLog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController username = TextEditingController();
+    TextEditingController email = TextEditingController();
     TextEditingController passwd = TextEditingController();
     @override
     // ignore: unused_element
     void dispose() {
       // Clean up the controller when the widget is disposed.
-      username.dispose();
+      email.dispose();
       passwd.dispose();
     }
 
     // ignore: non_constant_identifier_names
-    void CustomerLogin() async {
+    void SellerLogin() async {
       const dbName = 'Katradeplus';
       const dbAddress = '10.0.2.2';
       const defaultUri = 'mongodb://$dbAddress:27017/$dbName';
@@ -42,7 +44,8 @@ class SellerLog extends StatelessWidget {
       await db.dropCollection(collectionName);
       var collection = db.collection(collectionName);
       var res = await collection
-          .find({'email': username.text, 'pwd': passwd.text}).toList();
+          .find({'email': email.text, 'pwd': passwd.text}).toList();
+
       if (res.isEmpty) {
         showDialog(
           context: context,
@@ -50,14 +53,23 @@ class SellerLog extends StatelessWidget {
             return const AlertDialog(
               // Retrieve the text the that user has entered by using the
               // TextEditingController.
-              content: Text("Invalid password or Username"),
+              content: Text("Invalid password or Email"),
             );
           },
         );
       } else {
+        var idStore = res.first['_id'];
+        var storeName = res.first['store_name'];
+        var storeEmail = res.first['email'];
+        var addr = res.first['store_addr'];
+        var session = FlutterSession();
+        session.set("StoreName", storeName);
+        session.set("StoreAddr", addr);
+        session.set("StoreEmail", storeEmail);
+        session.set("id", idStore);
         // ignore: use_build_context_synchronously
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const SellerHome()));
       }
     }
 
@@ -92,7 +104,7 @@ class SellerLog extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 16),
                       child: TextField(
-                        controller: username,
+                        controller: email,
                         style:
                             const TextStyle(fontSize: 20, color: Colors.grey),
                         decoration: const InputDecoration(
@@ -139,12 +151,15 @@ class SellerLog extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: RaisedButton(
-                        color: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(16.0))),
-                        onPressed: CustomerLogin,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          onPrimary: Colors.black,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16.0))),
+                        ),
+                        onPressed: SellerLogin,
                         child: const Padding(
                           padding: EdgeInsets.all(12.0),
                           child: Text(
@@ -158,11 +173,14 @@ class SellerLog extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: RaisedButton(
-                        color: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(16.0))),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          onPrimary: Colors.black,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16.0))),
+                        ),
                         onPressed: () {
                           Navigator.push(
                               context,

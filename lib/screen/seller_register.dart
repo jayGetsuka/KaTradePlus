@@ -14,7 +14,8 @@ class SellerRegister extends StatelessWidget {
     TextEditingController storeAddr = TextEditingController();
     TextEditingController pwd = TextEditingController();
 
-    void RegisterCustomer() async {
+    // ignore: non_constant_identifier_names
+    void RegisterSeller() async {
       const dbName = 'Katradeplus';
       const dbAddress = '10.0.2.2';
       const defaultUri = 'mongodb://$dbAddress:27017/$dbName';
@@ -73,6 +74,7 @@ class SellerRegister extends StatelessWidget {
     return Scrollbar(
         child: Scaffold(
             resizeToAvoidBottomInset: false,
+            // ignore: avoid_unnecessary_containers
             body: Container(
                 child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -82,8 +84,8 @@ class SellerRegister extends StatelessWidget {
                 child: Container(
                   decoration: const BoxDecoration(color: Colors.green),
                   child: Column(children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Text(
                         "สมัครสมาชิก",
                         style: TextStyle(
@@ -198,12 +200,15 @@ class SellerRegister extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: RaisedButton(
-                        color: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(16.0))),
-                        onPressed: RegisterCustomer,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          onPrimary: Colors.black,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16.0))),
+                        ),
+                        onPressed: RegisterSeller,
                         child: const Padding(
                           padding: EdgeInsets.all(12.0),
                           child: Text(

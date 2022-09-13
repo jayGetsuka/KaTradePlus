@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:katradeplus/screen/index.dart';
 
 void main() {
+  // @dart=2.9
   runApp(const MyApp());
 }
 

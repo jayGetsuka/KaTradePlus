@@ -139,11 +139,14 @@ class Customerlog extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: RaisedButton(
-                        color: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(16.0))),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          onPrimary: Colors.black,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16.0))),
+                        ),
                         onPressed: CustomerLogin,
                         child: const Padding(
                           padding: EdgeInsets.all(12.0),
@@ -158,11 +161,13 @@ class Customerlog extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: RaisedButton(
-                        color: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(16.0))),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16.0))),
+                        ),
                         onPressed: () {
                           Navigator.push(
                               context,
@@ -174,9 +179,7 @@ class Customerlog extends StatelessWidget {
                           padding: EdgeInsets.all(12.0),
                           child: Text(
                             'สมัครสมาชิก',
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
+                            style: TextStyle(fontSize: 18),
                           ),
                         ),
                       ),

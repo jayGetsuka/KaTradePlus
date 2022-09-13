@@ -10,10 +10,11 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         body: Padding(
       padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+      // ignore: avoid_unnecessary_containers
       child: Container(
         child: Column(
           children: [
-            Text("Welcome to HomePage"),
+            const Text("Welcome to HomePage"),
             Center(
               child: ElevatedButton(
                 onPressed: () {
