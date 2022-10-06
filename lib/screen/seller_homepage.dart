@@ -6,6 +6,7 @@ import 'package:katradeplus/screen/seller_detail.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:katradeplus/screen/seller_order.dart';
 import 'package:katradeplus/screen/seller_addProduct.dart';
+import 'package:katradeplus/screen/live_stream.dart';
 
 class SellerHome extends StatefulWidget {
   const SellerHome({super.key});
@@ -59,8 +60,18 @@ class _MyStatefulWidgetState extends State<SellerHome> {
             onPressed: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(                                                                                                                 
+                  MaterialPageRoute(
                       builder: (context) => const SellerAddProduct()));
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.live_tv_rounded,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LiveStream()));
             },
           )
         ],

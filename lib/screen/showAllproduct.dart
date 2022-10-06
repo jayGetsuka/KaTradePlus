@@ -97,6 +97,7 @@ class _MyStatefulWidgetState extends State<ShowAllProduct> {
                                 ),
                                 TextButton(
                                   onPressed: () async {
+                                    Navigator.pop(context, "ตกลง");
                                     const dbName = 'Katradeplus';
                                     const dbAddress = '10.0.2.2';
 

@@ -67,15 +67,43 @@ class _MyStatefulWidgetState extends State<ShowAllOrder> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: const Icon(Icons.verified_sharp,
-                                color: Colors.green),
-                            tooltip: 'Edit product',
-                            onPressed: () {},
+                            icon:
+                                const Icon(Icons.verified, color: Colors.green),
+                            tooltip: 'Confirm Order',
+                            onPressed: () async {
+                              const dbName = 'Katradeplus';
+                              const dbAddress = '10.0.2.2';
+
+                              const defaultUri =
+                                  'mongodb://$dbAddress:27017/$dbName';
+                              var db = mongo.Db(defaultUri);
+                              await db.open();
+
+                              Future cleanupDatabase() async {
+                                await db.close();
+                              }
+
+                              if (!db.masterConnection.serverCapabilities
+                                  .supportsOpMsg) {
+                                return;
+                              }
+
+                              var collectionName = 'order';
+                              await db.dropCollection(collectionName);
+                              var collection = db.collection(collectionName);
+                              var res = await collection
+                                  .deleteOne(<String, Object>{
+                                '_id': product[index]['_id']
+                              },
+                                      collation: mongo.CollationOptions('fr',
+                                          strength: 1));
+                              // ignore: use_build_context_synchronously
+                            },
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete_forever_rounded,
                                 color: Colors.red),
-                            tooltip: 'Delete product',
+                            tooltip: 'Delete Order',
                             onPressed: () => showDialog<String>(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
@@ -83,13 +111,45 @@ class _MyStatefulWidgetState extends State<ShowAllOrder> {
                                     style: TextStyle(color: Colors.black)),
                                 actions: <Widget>[
                                   TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'ยกเลิก'),
+                                    onPressed: () async {
+                                      Navigator.pop(context,
+                                          "ยกเลิก"); // ignore: use_build_context_synchronously
+                                    },
                                     child: const Text('ยกเลิก'),
                                   ),
                                   TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'ตกลง'),
+                                    onPressed: () async {
+                                      Navigator.pop(context, "ตกลง");
+                                      const dbName = 'Katradeplus';
+                                      const dbAddress = '10.0.2.2';
+
+                                      const defaultUri =
+                                          'mongodb://$dbAddress:27017/$dbName';
+                                      var db = mongo.Db(defaultUri);
+                                      await db.open();
+
+                                      Future cleanupDatabase() async {
+                                        await db.close();
+                                      }
+
+                                      if (!db.masterConnection
+                                          .serverCapabilities.supportsOpMsg) {
+                                        return;
+                                      }
+
+                                      var collectionName = 'order';
+                                      await db.dropCollection(collectionName);
+                                      var collection =
+                                          db.collection(collectionName);
+                                      var res = await collection
+                                          .deleteOne(<String, Object>{
+                                        '_id': product[index]['_id']
+                                      },
+                                              collation: mongo.CollationOptions(
+                                                  'fr',
+                                                  strength: 1));
+                                      // ignore: use_build_context_synchronously
+                                    },
                                     child: const Text('ตกลง'),
                                   ),
                                 ],
